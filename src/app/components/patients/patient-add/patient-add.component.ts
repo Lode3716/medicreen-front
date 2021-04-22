@@ -12,11 +12,6 @@ export class PatientAddComponent implements OnInit {
 
   patientFormGroup?: FormGroup;
   submitted: boolean = false;
-  genderSelected: boolean = false;
-
-  templateUnchecked = false;
-  templateChecked = true;
-  template = true;
 
   constructor(private fb: FormBuilder,
               private patientsService: PatientsService,
@@ -28,14 +23,13 @@ export class PatientAddComponent implements OnInit {
       lastName: ["", Validators.required],
       firstName: ["", Validators.required],
       dob: ["", Validators.required],
-      gender: [this.template, Validators.required],
+      gender: ["", Validators.required],
       address: [""],
       phone: [""]
     });
   }
 
   onSavePatient() {
-    console.log('ngModel value', this.template);
     this.submitted = true;
     if (this.patientFormGroup?.invalid) return;
     this.patientsService.savePatient(this.patientFormGroup?.value)
