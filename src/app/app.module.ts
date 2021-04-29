@@ -1,16 +1,23 @@
-import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import {NgModule} from '@angular/core';
+import {BrowserModule} from '@angular/platform-browser';
+import {HttpClientModule} from '@angular/common/http';
 
-import { AppComponent } from './app.component';
-import { NavBarComponent } from './components/nav-bar/nav-bar.component';
-import { PatientsComponent } from './components/patients/patients.component';
-import { HomeComponent } from './components/home/home.component';
-import { AppRoutingModule } from './app-routing.module';
+import {AppComponent} from './app.component';
+import {NavBarComponent} from './components/nav-bar/nav-bar.component';
+import {PatientsComponent} from './components/patients/patients.component';
+import {HomeComponent} from './components/home/home.component';
+import {AppRoutingModule} from './app-routing.module';
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {PatientAddComponent} from "./components/patients/patient-add/patient-add.component";
 import {PatientEditComponent} from "./components/patients/patient-edit/patient-edit.component";
-
+import {NoteEditComponent} from './components/patients/patient-note/note-edit.component';
+import {allIcons, NgxBootstrapIconsModule} from "ngx-bootstrap-icons";
+import {DialogCreateNoteComponent} from './components/patients/patient-note/dialog-create-note/dialog-create-note.component';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MateSpinnerModule} from "@material-extra/spinner";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
 
 
 @NgModule({
@@ -20,16 +27,25 @@ import {PatientEditComponent} from "./components/patients/patient-edit/patient-e
     PatientsComponent,
     HomeComponent,
     PatientAddComponent,
-    PatientEditComponent
+    PatientEditComponent,
+    NoteEditComponent,
+    DialogCreateNoteComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxBootstrapIconsModule.pick(allIcons),
+    MatFormFieldModule,
+    MatDialogModule,
+    MateSpinnerModule,
+    MatInputModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

@@ -13,11 +13,14 @@ export class PatientEditComponent implements OnInit {
   patientFormGroup?: FormGroup;
   private submitted: boolean = false;
 
+
+
   constructor(private activatedRoute: ActivatedRoute,
               private patientsService: PatientsService,
               private fb: FormBuilder,
               private router: Router) {
     this.patientId = activatedRoute.snapshot.params.id;
+
   }
 
   ngOnInit(): void {

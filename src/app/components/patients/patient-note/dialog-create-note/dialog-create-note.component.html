@@ -1,0 +1,34 @@
+<form>
+  <nav class="navbar navbar-dark bg-primary mb-4">
+    <a class="navbar-text mx-2">
+      Passe
+    </a>
+
+    <button class="btn btn-primary m-2"
+            type="submit"
+            (click)="saveNote(notePreparation.value)">
+      <span [hidden]="isLoading">Save</span>
+      <span [hidden]="!isLoading">
+      <span class="text-white"><mat-spinner mode="indeterminate" diameter="30">
+        </mat-spinner>
+        </span>
+      </span>
+    </button>
+
+    <button class="btn btn-danger m-2" (click)="closeDialog()" type="button">Close</button>
+  </nav>
+  <div class="container-fluid">
+    <mat-form-field class="m-3 w-90">
+      <mat-label>
+        Your note
+      </mat-label>
+      <textarea matInput
+                #notePreparation
+                aria-label="Note in preparation"
+                rows="20"
+                cols="120"
+      ></textarea>
+      <mat-hint align="end">Nombre de caractères {{notePreparation.value.length}}</mat-hint>
+    </mat-form-field>
+  </div>
+</form>

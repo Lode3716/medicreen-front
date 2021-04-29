@@ -4,7 +4,9 @@
 
 export const environment = {
   production: false,
-  host:"http://localhost:8081"
+  patient:"http://localhost:8081",
+  note:"http://localhost:8082"
+
 };
 
 /*

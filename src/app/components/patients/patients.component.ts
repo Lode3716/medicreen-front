@@ -56,4 +56,7 @@ export class PatientsComponent implements OnInit {
     this.router.navigateByUrl("/editPatient/"+p.id);
   }
 
+  onNote(p: Patient) {
+    this.router.navigateByUrl(("/notePatient/"+p.id));
+  }
 }

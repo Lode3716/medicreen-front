@@ -1,0 +1,46 @@
+<div class="container" *ngIf="patientFormGroup">
+  <form [formGroup]="patientFormGroup">
+  <h3>All notes </h3>
+  <div class="form-group row">
+    <label class="col-sm-2 col-form-label">First name : </label>
+    <input type="text" readonly class="form-inline text-center" formControlName="lastName">
+    <label class="col-sm-2 col-form-label">Last name : </label>
+    <input type="text" readonly class="form-inline text-center" formControlName="firstName">
+  </div>
+
+</form>
+</div>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
+      <h3>Patient Notes</h3>
+      <button class="btn btn-outline-primary" (click)="createNote()"> New note
+        <svg class="bi" width="16" height="16" fill="currentColor">
+          <use xlink:href="assets/img/bootstrap-icons.svg#pen"></use>
+        </svg>
+      </button>
+      <div class="container-fluid">
+        <div class="row my-4" *ngFor="let not of noteService.subjectNote$ | async">
+          <div class="card col p-0">
+            <div class="card-body">
+              <p class="card-text" [innerHTML]="not.note"></p>
+              <button class="btn btn-link" >
+                  <i i-bs class="bi" width="16" height="16" fill="currentColor" name="journal-medical"></i>Edit
+              </button>
+              <button class="btn btn-link text-danger" >
+                <i i-bs class="bi" width="16" height="16" fill="currentColor" name="journal-minus"></i>Delete
+              </button>
+            </div>
+            <div class="card-footer">
+              <span class="text-muted">
+                Last update {{not.createDate | date: 'dd/MM/yyyy'}} by {{not.practitioner}}
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
