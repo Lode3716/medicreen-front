@@ -53,13 +53,14 @@ export class NoteEditComponent implements OnInit {
     const ref = this.dialog.open(DialogCreateNoteComponent, {
         data: {
           // tslint:disable-next-line:radix
-          idIndividu: Number.parseInt(this.activatedRoute.parent.snapshot.paramMap.get('idSapMarin'))
+          idPatient: this.patientId
         },
         hasBackdrop: false,
         closeOnNavigation: false,
         disableClose: true,
         position: {
-          bottom: '1em',
+          top: '1em',
+          left: '1em',
           right: '1em'
         },
         panelClass: 'dialog-popup',

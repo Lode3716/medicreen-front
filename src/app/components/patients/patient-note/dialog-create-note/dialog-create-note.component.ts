@@ -2,6 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {NotesService} from "../../../../services/notes.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {environment} from "../../../../../environments/environment";
 
 @Component({
   selector: 'app-dialog-create-note',
@@ -28,13 +29,17 @@ export class DialogCreateNoteComponent {
 
   saveNote(note: string): void {
     this.isLoading = true;
-    this.noteServie.saveNote(this.data).toPromise().then(value => {
-      this.snack.open('Commentaire enregistré', 'Fermer', {
+    this.noteServie.saveNote(this.data.idPatient,'doctor',note).then(value => {
+      this.snack.open('Notes Saved', 'Closed', {
+        horizontalPosition: environment.snackbar.horizontalPosition,
+        verticalPosition: environment.snackbar.verticalPosition,
         duration: 2000
       }).afterOpened().subscribe(() => this.closeDialog())
     })
       .catch(reason => {
-        this.snack.open('Impossible d\'enregistrer le commentaire : ' + reason.toString(), 'Fermer', {
+        this.snack.open('Unable to save note : ' + reason.toString(), 'Closed', {
+          horizontalPosition: environment.snackbar.horizontalPosition,
+          verticalPosition: environment.snackbar.verticalPosition,
           duration: 2000
         })
       }).finally(() => this.isLoading = false);

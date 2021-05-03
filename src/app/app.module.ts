@@ -18,6 +18,10 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MateSpinnerModule} from "@material-extra/spinner";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {MatButtonModule} from "@angular/material/button";
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {OverlayModule} from "@angular/cdk/overlay";
 
 
 @NgModule({
@@ -33,6 +37,7 @@ import {MatInputModule} from "@angular/material/input";
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -42,7 +47,10 @@ import {MatInputModule} from "@angular/material/input";
     MatDialogModule,
     MateSpinnerModule,
     MatInputModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatButtonModule,
+    MatSnackBarModule,
+    OverlayModule
   ],
   providers: [],
   bootstrap: [AppComponent]
