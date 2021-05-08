@@ -40,9 +40,13 @@ export class NotesService {
       });
   }
 
-  updateNotePatient(note: Note) {
+  updateNotePatient(note: Note): Promise<any> {
     let host = environment.note;
-    return this.http.put<Note>(host + '/patHistory/' + note.id, note);
+    return this.http.put<Note>(host + '/patHistory/' + note.id, JSON.stringify(note), {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).toPromise();
   }
 
 

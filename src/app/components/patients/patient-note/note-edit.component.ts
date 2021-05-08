@@ -7,6 +7,7 @@ import {Subscription} from "rxjs";
 import {DialogCreateNoteComponent} from "./dialog-create-note/dialog-create-note.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Overlay,} from "@angular/cdk/overlay";
+import {DialogEditNoteComponent} from "./dialog-edit-note/dialog-edit-note.component";
 
 @Component({
   selector: 'app-note-edit',
@@ -70,8 +71,35 @@ export class NoteEditComponent implements OnInit {
     )
     ref.afterClosed()
       .subscribe(value => {
-        this.noteService.subjectNote$.asObservable();
+       this.noteSubject = this.noteService.getNotePatient(this.patientId);
       })
   }
 
+
+  public editNote(note: any): void {
+
+    const editNote = Object.assign({}, note)
+
+    const ref = this.dialog.open(DialogEditNoteComponent, {
+        data: {
+          note: editNote
+        },
+        hasBackdrop: false,
+        closeOnNavigation: false,
+        disableClose: true,
+        position: {
+          bottom: '1em',
+          right: '1em'
+        },
+        panelClass: 'dialog-popup',
+        autoFocus: false,
+        scrollStrategy: this.overlay.scrollStrategies.noop()
+      }
+    )
+
+    ref.afterClosed()
+      .subscribe(value => {
+        this.noteSubject = this.noteService.getNotePatient(this.patientId);
+      })
+  }
 }

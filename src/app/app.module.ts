@@ -22,6 +22,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OverlayModule} from "@angular/cdk/overlay";
+import { DialogEditNoteComponent } from './components/patients/patient-note/dialog-edit-note/dialog-edit-note.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import {OverlayModule} from "@angular/cdk/overlay";
     PatientAddComponent,
     PatientEditComponent,
     NoteEditComponent,
-    DialogCreateNoteComponent
+    DialogCreateNoteComponent,
+    DialogEditNoteComponent
   ],
   imports: [
     BrowserModule,
