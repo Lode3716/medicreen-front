@@ -22,6 +22,8 @@ export class NoteEditComponent implements OnInit {
   patientId: number;
   servicePatient: string[];
 
+  isLoading: boolean;
+
   @ViewChild(DialogCreateNoteComponent)
   dialogComponent: DialogCreateNoteComponent
 
@@ -32,7 +34,8 @@ export class NoteEditComponent implements OnInit {
               private dialog: MatDialog,
               private overlay: Overlay) {
     this.patientId = activatedRoute.snapshot.params.id;
-    this.servicePatient = ['passe', 'trespasse'];
+    this.servicePatient = [];
+    this.isLoading=true;
   }
 
   ngOnInit(): void {
@@ -51,17 +54,17 @@ export class NoteEditComponent implements OnInit {
 
 
   createNote(): void {
+    this.isLoading=false;
     const ref = this.dialog.open(DialogCreateNoteComponent, {
         data: {
           // tslint:disable-next-line:radix
-          idPatient: this.patientId
+          idPatient: this.patientId,
         },
         hasBackdrop: false,
         closeOnNavigation: false,
         disableClose: true,
         position: {
-          top: '1em',
-          left: '1em',
+          bottom: '1em',
           right: '1em'
         },
         panelClass: 'dialog-popup',
@@ -72,12 +75,13 @@ export class NoteEditComponent implements OnInit {
     ref.afterClosed()
       .subscribe(value => {
        this.noteSubject = this.noteService.getNotePatient(this.patientId);
+       this.isLoading=true;
       })
   }
 
 
   public editNote(note: any): void {
-
+    this.isLoading=false;
     const editNote = Object.assign({}, note)
 
     const ref = this.dialog.open(DialogEditNoteComponent, {
@@ -100,6 +104,7 @@ export class NoteEditComponent implements OnInit {
     ref.afterClosed()
       .subscribe(value => {
         this.noteSubject = this.noteService.getNotePatient(this.patientId);
+        this.isLoading=true;
       })
   }
 }
