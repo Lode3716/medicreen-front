@@ -22,6 +22,7 @@
     "@angular/platform-browser-dynamic": "~11.2.9",
     "@angular/router": "~11.2.9",
     "@material-extra/spinner": "^1.0.1",
+    "@ng-bootstrap/ng-bootstrap": "^9.1.0",
     "angular-animations": "^0.11.0",
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.1",

@@ -22,7 +22,9 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatButtonModule} from "@angular/material/button";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import {OverlayModule} from "@angular/cdk/overlay";
-import { DialogEditNoteComponent } from './components/patients/patient-note/dialog-edit-note/dialog-edit-note.component';
+import {DialogEditNoteComponent} from './components/patients/patient-note/dialog-edit-note/dialog-edit-note.component';
+import {DialogConfirmationlogComponent} from './components/utils/dialog-confirmationlog/dialog-confirmationlog.component';
+import {ConfirmationDialogService} from "./components/utils/dialog-confirmationlog/ConfirmationDialogService";
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { DialogEditNoteComponent } from './components/patients/patient-note/dial
     PatientEditComponent,
     NoteEditComponent,
     DialogCreateNoteComponent,
-    DialogEditNoteComponent
+    DialogEditNoteComponent,
+    DialogConfirmationlogComponent
   ],
   imports: [
     BrowserModule,
@@ -54,7 +57,8 @@ import { DialogEditNoteComponent } from './components/patients/patient-note/dial
     MatSnackBarModule,
     OverlayModule
   ],
-  providers: [],
+  providers: [ConfirmationDialogService],
+  entryComponents: [DialogConfirmationlogComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule {

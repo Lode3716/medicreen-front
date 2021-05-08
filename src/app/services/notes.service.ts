@@ -49,5 +49,13 @@ export class NotesService {
     }).toPromise();
   }
 
+  deleteNotePatient(idPatient: string): Promise<any>{
+    let host = environment.note;
+    return this.http.delete<Note>(host + '/patHistory/' + idPatient, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    }).toPromise();
+  }
 
 }
