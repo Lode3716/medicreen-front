@@ -11,6 +11,7 @@ export const environment = {
   production: false,
   patient:"http://localhost:8081",
   note:"http://localhost:8082",
+  rapport:"http://localhost:8080",
 
   snackbar:{
     horizontalPosition : snackBarHorizontalPosition,

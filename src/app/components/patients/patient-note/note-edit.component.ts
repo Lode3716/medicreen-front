@@ -1,6 +1,6 @@
 import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import {PatientsService} from "../../../services/patients.service";
-import {ActivatedRoute, Router} from "@angular/router";
+import {ActivatedRoute} from "@angular/router";
 import {NotesService} from "../../../services/notes.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {Subscription} from "rxjs";
@@ -8,11 +8,9 @@ import {DialogCreateNoteComponent} from "./dialog-create-note/dialog-create-note
 import {MatDialog} from "@angular/material/dialog";
 import {Overlay,} from "@angular/cdk/overlay";
 import {DialogEditNoteComponent} from "./dialog-edit-note/dialog-edit-note.component";
-import {DialogConfirmationlogComponent} from "../../utils/dialog-confirmationlog/dialog-confirmationlog.component";
-import {Note} from "../../../model/note.model";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {environment} from "../../../../environments/environment";
 import {ConfirmationDialogService} from "../../utils/dialog-confirmationlog/ConfirmationDialogService";
+import {RapportService} from "../../../services/rapport.service";
 
 @Component({
   selector: 'app-note-edit',
@@ -27,13 +25,18 @@ export class NoteEditComponent implements OnInit {
   patientId: number;
   servicePatient: string[];
 
+  rapportFormGroup?: FormGroup;
+
   isLoading: boolean;
+
+  color: string = '';
 
   @ViewChild(DialogCreateNoteComponent)
   dialogComponent: DialogCreateNoteComponent
 
   constructor(private activatedRoute: ActivatedRoute,
               private patientService: PatientsService,
+              private rapportService: RapportService,
               public noteService: NotesService,
               private fb: FormBuilder,
               private dialog: MatDialog,
@@ -42,7 +45,8 @@ export class NoteEditComponent implements OnInit {
               private confirmationDialogService: ConfirmationDialogService) {
     this.patientId = activatedRoute.snapshot.params.id;
     this.servicePatient = [];
-    this.isLoading=true;
+    this.isLoading = true;
+    this.color = '';
   }
 
   ngOnInit(): void {
@@ -55,13 +59,14 @@ export class NoteEditComponent implements OnInit {
         })
       });
 
+    this.updateRapport();
     this.noteSubject = this.noteService.getNotePatient(this.patientId);
 
   }
 
 
   createNote(): void {
-    this.isLoading=false;
+    this.isLoading = false;
     const ref = this.dialog.open(DialogCreateNoteComponent, {
         data: {
           // tslint:disable-next-line:radix
@@ -81,14 +86,14 @@ export class NoteEditComponent implements OnInit {
     )
     ref.afterClosed()
       .subscribe(value => {
-       this.noteSubject = this.noteService.getNotePatient(this.patientId);
-       this.isLoading=true;
+        this.noteSubject = this.noteService.getNotePatient(this.patientId);
+        this.isLoading = true;
       })
   }
 
 
   public editNote(note: any): void {
-    this.isLoading=false;
+    this.isLoading = false;
     const editNote = Object.assign({}, note)
 
     const ref = this.dialog.open(DialogEditNoteComponent, {
@@ -111,18 +116,30 @@ export class NoteEditComponent implements OnInit {
     ref.afterClosed()
       .subscribe(value => {
         this.noteSubject = this.noteService.getNotePatient(this.patientId);
-        this.isLoading=true;
+        this.updateRapport();
+        this.isLoading = true;
       })
   }
+
   public closeDialog(): void {
     this.dialog.closeAll();
   }
 
-  deleteNote(idNote :string): void {
+  updateRapport() {
+    this.rapportService.getRapport(this.patientId)
+      .subscribe(rapport => {
+        this.rapportFormGroup = this.fb.group({
+          age: [rapport.age, Validators.required],
+          level: [rapport.level, Validators.required]
+        })
+        this.color = this.rapportFormGroup.value.level
+      });
+  }
+
+  deleteNote(idNote: string): void {
     this.confirmationDialogService.confirm('Please confirm..', 'Do you want to delete this note ?')
-      .then((confirmed) =>
-      {
-        if (confirmed== true) {
+      .then((confirmed) => {
+        if (confirmed == true) {
           this.noteService.deleteNotePatient(idNote)
             .then(value => {
               this.snack.open('Note delete', '', {
@@ -135,8 +152,22 @@ export class NoteEditComponent implements OnInit {
               })
             }).finally(() => this.noteSubject = this.noteService.getNotePatient(this.patientId))
         }
-  })
+      })
       .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
 
+  getColor() {
+    if (this.color == 'none') {
+      return '#007bff';
+    }
+    if (this.color == 'borderline') {
+      return '#17a2b8';
+    }
+    if (this.color == 'in danger') {
+      return 'orange';
+    }
+    if (this.color == 'early onset') {
+      return '#dc3545';
+    }
+  }
 }

@@ -1,13 +1,22 @@
+<h3 class="text-center mb-3">Patient information</h3>
 <div class="container" *ngIf="patientFormGroup">
   <form [formGroup]="patientFormGroup">
-    <h3 class="text-center">Patient information</h3>
     <div class="form-group row">
       <label class="col-sm-2 col-form-label">First name : </label>
       <input type="text" readonly class="form-inline text-center" formControlName="lastName">
       <label class="col-sm-2 col-form-label">Last name : </label>
       <input type="text" readonly class="form-inline text-center" formControlName="firstName">
     </div>
-
+  </form>
+</div>
+<div class="container " *ngIf="rapportFormGroup">
+  <form [formGroup]="rapportFormGroup">
+    <div class="form-group row">
+      <label class="col-sm-2 col-form-label">Age : </label>
+      <input type="text" readonly class="form-inline text-center" formControlName="age">
+      <label class="col-sm-2 col-form-label">Risk level : </label>
+      <input type="text" readonly class="form-inline text-center" [ngStyle]="{backgroundColor:getColor()}" formControlName="level">
+    </div>
   </form>
 </div>
 
