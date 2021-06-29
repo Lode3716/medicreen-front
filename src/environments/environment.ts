@@ -9,9 +9,9 @@ const snackBarVerticalPosition : MatSnackBarVerticalPosition ='top'
 
 export const environment = {
   production: false,
-  patient:"http://localhost:8081",
-  note:"http://localhost:8082",
-  rapport:"http://localhost:8080",
+  patient:"http://127.0.0.1:8081",
+  note:"http://127.0.0.1:8082",
+  rapport:"http://127.0.0.1:8080",
 
   snackbar:{
     horizontalPosition : snackBarHorizontalPosition,
