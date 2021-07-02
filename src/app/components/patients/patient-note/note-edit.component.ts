@@ -60,8 +60,6 @@ export class NoteEditComponent implements OnInit {
       });
 
     this.updateRapport();
-    this.noteSubject = this.noteService.getNotePatient(this.patientId);
-
   }
 
 
@@ -86,7 +84,7 @@ export class NoteEditComponent implements OnInit {
     )
     ref.afterClosed()
       .subscribe(value => {
-        this.noteSubject = this.noteService.getNotePatient(this.patientId);
+        this.updateRapport();
         this.isLoading = true;
       })
   }
@@ -115,7 +113,6 @@ export class NoteEditComponent implements OnInit {
 
     ref.afterClosed()
       .subscribe(value => {
-        this.noteSubject = this.noteService.getNotePatient(this.patientId);
         this.updateRapport();
         this.isLoading = true;
       })
@@ -126,6 +123,7 @@ export class NoteEditComponent implements OnInit {
   }
 
   updateRapport() {
+    this.noteSubject = this.noteService.getNotePatient(this.patientId);
     this.rapportService.getRapport(this.patientId)
       .subscribe(rapport => {
         this.rapportFormGroup = this.fb.group({
@@ -134,6 +132,7 @@ export class NoteEditComponent implements OnInit {
         })
         this.color = this.rapportFormGroup.value.level
       });
+
   }
 
   deleteNote(idNote: string): void {
@@ -150,8 +149,11 @@ export class NoteEditComponent implements OnInit {
               this.snack.open('Unable to delete note : ' + reason.toString(), '', {
                 duration: 1000
               })
-            }).finally(() => this.noteSubject = this.noteService.getNotePatient(this.patientId))
-        }
+            }).finally(() =>
+          {
+            this.updateRapport();
+          }
+          )}
       })
       .catch(() => console.log('User dismissed the dialog (e.g., by using ESC, clicking the cross icon, or clicking outside the dialog)'));
   }
